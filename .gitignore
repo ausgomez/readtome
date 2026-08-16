@@ -1,0 +1,39 @@
+node_modules/
+target/
+build/
+dist/
+.DS_Store
+*.swp
+*.swo
+
+# Tauri generated
+src-tauri/gen/
+
+# Environment
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# GSD runtime state (not project artifacts)
+.gsd/gsd.db
+.gsd/gsd.db-shm
+.gsd/gsd.db-wal
+.gsd/runtime/
+.gsd/exec/
+.gsd/audit-log.jsonl
+.gsd/event-log.jsonl
+.gsd/notifications.jsonl
+.gsd/last-snapshot.md
+.gsd/state.json
+.gsd/state-manifest.json
+.gsd/.compat.json
+.gsd/quarantine/
+
+# Background shell state
+.bg-shell/
+
+# Claude local settings
+.claude/settings.local.json
