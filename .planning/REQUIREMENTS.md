@@ -46,7 +46,28 @@
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| — | — | Populated by roadmap |
+| CORE-01 | Phase 2 | Pending |
+| CORE-02 | Phase 2 | Pending |
+| CORE-03 | Phase 2 | Pending |
+| CORE-04 | Phase 2 | Pending |
+| SYS-01 | Phase 1 | Pending |
+| SYS-02 | Phase 5 | Pending |
+| SYS-03 | Phase 1 | Pending |
+| CAP-01 | Phase 1 | Pending |
+| CAP-02 | Phase 1 | Pending |
+| CAP-03 | Phase 4 | Pending |
+| TTS-01 | Phase 2 | Pending |
+| TTS-02 | Phase 2 | Pending |
+| TTS-03 | Phase 4 | Pending |
+| TTS-04 | Phase 3 | Pending |
+| TTS-05 | Phase 3 | Pending |
+| AUD-01 | Phase 2 | Pending |
+| AUD-02 | Phase 5 | Pending |
+| AUD-03 | Phase 5 | Pending |
+| AUD-04 | Phase 5 | Pending |
+| AUD-05 | Phase 4 | Pending |
+| SET-01 | Phase 1 | Pending |
+| SET-02 | Phase 3 | Pending |
 
 ## v2 Requirements (Deferred)
 
@@ -70,4 +91,4 @@
 - Subscription system — users bring their own API keys
 
 ---
-*Last updated: 2026-08-15 after initialization*
+*Last updated: 2026-08-15 after roadmap creation*
