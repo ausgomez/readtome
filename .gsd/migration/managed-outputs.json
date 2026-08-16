@@ -4,9 +4,20 @@
   "ROADMAP.md",
   "STATE.md",
   "last-snapshot.md",
+  "milestones.migrating/M001/M001-RESEARCH.md",
+  "milestones.migrating/M001/M001-ROADMAP.md",
+  "milestones.migrating/M001/slices/S01/S01-CONTINUE.md",
+  "milestones.migrating/M001/slices/S01/S01-PLAN.md",
+  "milestones.migrating/M001/slices/S02/S02-PLAN.md",
+  "milestones.migrating/M001/slices/S03/S03-PLAN.md",
   "milestones/M001/M001-ROADMAP.md",
   "milestones/M001/slices/S01/S01-CONTINUE.md",
   "milestones/M001/slices/S01/S01-PLAN.md",
   "milestones/M001/slices/S02/S02-PLAN.md",
-  "milestones/M001/slices/S03/S03-PLAN.md"
+  "milestones/M001/slices/S03/S03-PLAN.md",
+  "phases/01-foundation-input-pipeline/01-01-PLAN.md",
+  "phases/01-foundation-input-pipeline/01-02-PLAN.md",
+  "phases/01-foundation-input-pipeline/01-03-PLAN.md",
+  "phases/01-foundation-input-pipeline/01-ROADMAP.md",
+  "phases/01-foundation-input-pipeline/S01-CONTINUE.md"
 ]
