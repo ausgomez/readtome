@@ -5,7 +5,7 @@ mod speech;
 mod tray;
 
 use std::sync::Mutex;
-use tauri::Manager;
+use tauri::{Manager, WindowEvent};
 
 pub struct AppState {
     pub config: Mutex<config::AppConfig>,
@@ -13,13 +13,17 @@ pub struct AppState {
 
 #[tauri::command]
 fn get_config(state: tauri::State<AppState>) -> config::AppConfig {
-    let config = state.config.lock().unwrap();
-    let mut masked = config.clone();
-    // Mask sensitive fields for frontend display
-    if !masked.voice_id.is_empty() {
-        masked.voice_id = masked.voice_id.clone();
-    }
-    masked
+    state.config.lock().unwrap().clone()
+}
+
+#[tauri::command]
+fn get_voices() -> Result<Vec<speech::VoiceInfo>, String> {
+    speech::get_voices().map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+fn test_speak() -> Result<(), String> {
+    speech::speak("This is a test of ReadToMe text to speech.").map_err(|e| e.to_string())
 }
 
 #[tauri::command]
@@ -36,6 +40,9 @@ fn save_config(
     drop(current);
 
     config::save_config(&app, &new_config).map_err(|e| e.to_string())?;
+
+    speech::apply_config(&new_config.voice_id, new_config.playback_speed)
+        .map_err(|e| e.to_string())?;
 
     if hotkey_changed {
         if let Err(e) = hotkey::unregister_hotkey(&app, &old_hotkey) {
@@ -62,12 +69,13 @@ pub fn run() {
         .setup(|app| {
             let loaded_config = config::load_config(app.handle());
 
-            // Save defaults on first launch
             if let Err(e) = config::save_config(app.handle(), &loaded_config) {
                 log::warn!("Failed to save initial config: {}", e);
             }
 
             let hotkey_str = loaded_config.hotkey.clone();
+            let voice_id = loaded_config.voice_id.clone();
+            let speed = loaded_config.playback_speed;
 
             app.manage(AppState {
                 config: Mutex::new(loaded_config),
@@ -96,18 +104,35 @@ pub fn run() {
                 anyhow::anyhow!("TTS initialization failed: {}", e)
             })?;
 
+            if let Err(e) = speech::apply_config(&voice_id, speed) {
+                log::warn!("Failed to apply TTS config: {}", e);
+            }
+
             hotkey::register_hotkey(app.handle(), &hotkey_str)?;
 
             log::info!("Setup complete");
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![get_config, save_config])
+        .invoke_handler(tauri::generate_handler![get_config, save_config, get_voices, test_speak])
         .build(tauri::generate_context!())
         .expect("error building tauri application");
 
-    app.run(|_app_handle, event| {
-        if let tauri::RunEvent::ExitRequested { api, .. } = event {
-            api.prevent_exit();
+    app.run(|app_handle, event| {
+        match event {
+            tauri::RunEvent::ExitRequested { api, .. } => {
+                api.prevent_exit();
+            }
+            tauri::RunEvent::WindowEvent {
+                label,
+                event: WindowEvent::CloseRequested { api, .. },
+                ..
+            } if label == "main" => {
+                api.prevent_close();
+                if let Some(window) = app_handle.get_webview_window("main") {
+                    let _ = window.hide();
+                }
+            }
+            _ => {}
         }
     });
 }

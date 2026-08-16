@@ -24,6 +24,9 @@ pub fn register_hotkey(app: &AppHandle, shortcut_str: &str) -> Result<(), Box<dy
         app.global_shortcut().unregister(shortcut)?;
     }
 
+    // Unregister at the OS level in case a previous instance left it registered
+    let _ = app.global_shortcut().unregister(shortcut);
+
     let app_handle = app.clone();
     app.global_shortcut().on_shortcut(shortcut, move |_app, _scut, event| {
         if event.state == ShortcutState::Pressed {

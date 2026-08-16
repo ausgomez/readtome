@@ -1,5 +1,6 @@
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Mutex;
+use serde::{Deserialize, Serialize};
 use tts::Tts;
 
 struct TtsWrapper(Tts);
@@ -11,6 +12,12 @@ unsafe impl Sync for TtsWrapper {}
 
 static TTS_ENGINE: Mutex<Option<TtsWrapper>> = Mutex::new(None);
 static SPEAKING: AtomicBool = AtomicBool::new(false);
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct VoiceInfo {
+    pub id: String,
+    pub name: String,
+}
 
 pub fn init() -> Result<(), Box<dyn std::error::Error>> {
     let engine = Tts::default()?;
@@ -37,6 +44,41 @@ pub fn init() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
+pub fn apply_config(voice_id: &str, rate: f32) -> Result<(), Box<dyn std::error::Error>> {
+    let mut lock = TTS_ENGINE.lock().map_err(|e| format!("TTS lock poisoned: {}", e))?;
+    let wrapper = lock.as_mut().ok_or("TTS engine not initialized")?;
+
+    if !voice_id.is_empty() {
+        if let Ok(voices) = wrapper.0.voices() {
+            if let Some(voice) = voices.iter().find(|v| v.id() == voice_id) {
+                wrapper.0.set_voice(voice)?;
+                log::info!("TTS voice set to: {}", voice_id);
+            } else {
+                log::warn!("Voice '{}' not found, keeping current voice", voice_id);
+            }
+        }
+    }
+
+    wrapper.0.set_rate(rate)?;
+    log::info!("TTS rate set to {}", rate);
+
+    Ok(())
+}
+
+pub fn get_voices() -> Result<Vec<VoiceInfo>, Box<dyn std::error::Error>> {
+    let lock = TTS_ENGINE.lock().map_err(|e| format!("TTS lock poisoned: {}", e))?;
+    let wrapper = lock.as_ref().ok_or("TTS engine not initialized")?;
+
+    let voices = wrapper.0.voices()?;
+    Ok(voices
+        .iter()
+        .map(|v| VoiceInfo {
+            id: v.id(),
+            name: v.name(),
+        })
+        .collect())
+}
+
 pub fn speak(text: &str) -> Result<(), Box<dyn std::error::Error>> {
     let mut lock = TTS_ENGINE.lock().map_err(|e| format!("TTS lock poisoned: {}", e))?;
     let wrapper = lock.as_mut().ok_or("TTS engine not initialized")?;
@@ -59,12 +101,4 @@ pub fn stop() -> Result<(), Box<dyn std::error::Error>> {
 
 pub fn is_speaking() -> bool {
     SPEAKING.load(Ordering::Relaxed)
-}
-
-pub fn set_rate(rate: f32) -> Result<(), Box<dyn std::error::Error>> {
-    let mut lock = TTS_ENGINE.lock().map_err(|e| format!("TTS lock poisoned: {}", e))?;
-    let wrapper = lock.as_mut().ok_or("TTS engine not initialized")?;
-    wrapper.0.set_rate(rate)?;
-    log::info!("TTS rate set to {}", rate);
-    Ok(())
 }

@@ -12,12 +12,15 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "ReadToMe Settings",
         "width": 480,
-        "height": 400,
+        "height": 520,
         "visible": false,
         "skipTaskbar": true,
-        "resizable": false
+        "resizable": false,
+        "closable": true,
+        "hiddenTitle": true
       }
     ],
     "security": {
