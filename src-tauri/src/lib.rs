@@ -1,6 +1,7 @@
 mod capture;
 mod config;
 mod hotkey;
+mod speech;
 mod tray;
 
 use std::sync::Mutex;
@@ -89,6 +90,12 @@ pub fn run() {
             }
 
             tray::setup_tray(app.handle())?;
+
+            speech::init().map_err(|e| {
+                log::error!("TTS init failed: {}", e);
+                anyhow::anyhow!("TTS initialization failed: {}", e)
+            })?;
+
             hotkey::register_hotkey(app.handle(), &hotkey_str)?;
 
             log::info!("Setup complete");

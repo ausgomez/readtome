@@ -19,6 +19,11 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# Ensure we're in the project root (the parent of this script's directory).
+# When invoked from WSL, the working directory is a UNC path that Windows
+# doesn't support, so it falls back to C:\Windows — breaking npm/cargo.
+Set-Location (Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path))
+
 Write-Host "ReadToMe Windows Build" -ForegroundColor Cyan
 Write-Host "======================" -ForegroundColor Cyan
 

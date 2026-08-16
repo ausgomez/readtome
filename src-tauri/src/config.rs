@@ -16,7 +16,7 @@ impl Default for AppConfig {
     fn default() -> Self {
         Self {
             hotkey: "CmdOrCtrl+Shift+R".to_string(),
-            provider: "elevenlabs".to_string(),
+            provider: "local".to_string(),
             voice_id: String::new(),
             playback_speed: 1.0,
         }
