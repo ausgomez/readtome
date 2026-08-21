@@ -23,7 +23,7 @@ See: .planning/PROJECT.md (updated 2026-08-15)
 Phase: 1 of 5 (Foundation + Input Pipeline)
 Plan: 0 of 0 in current phase (not yet planned)
 Status: Ready to plan
-Last activity: 2026-08-15 — Roadmap created
+Last activity: 2026-08-21 — Completed quick task 260821-fcm: errexit-safe status handling in scripts/build-windows.sh
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -66,6 +66,12 @@ None yet.
 - enigo cross-platform reliability is LOW confidence — may need spike in Phase 1
 - macOS Accessibility permissions silently fail — must handle in Phase 1
 - Streaming audio with rodio needs investigation (no clear examples of chunked HTTP -> rodio sink)
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260821-fcm | errexit-safe status handling in scripts/build-windows.sh — dead `BUILD_EXIT` capture and silent `WIN_USER` detection abort | 2026-08-21 | c49c0a8 | [260821-fcm-fix-dead-build-exit-variable-in-scripts-](./quick/260821-fcm-fix-dead-build-exit-variable-in-scripts-/) |
 
 ## Deferred Items
 
