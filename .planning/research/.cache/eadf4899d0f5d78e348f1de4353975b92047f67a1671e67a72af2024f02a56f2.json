@@ -1,1 +1,0 @@
-{"content":"rodio 0.21.1: High-level Rust audio playback built on cpal. Supports streaming via Source trait. Default 100ms buffer latency. Symphonia-based format decoding (MP3, WAV, FLAC, Vorbis). Can decode from in-memory bytes via Cursor.","source":"web","provider":"websearch","confidence":"MEDIUM","fetched_at":"2026-08-16T04:20:27.847Z","ttl":86400000,"kind":"docs"}

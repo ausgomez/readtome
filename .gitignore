@@ -37,3 +37,9 @@ src-tauri/gen/
 
 # Claude local settings
 .claude/settings.local.json
+
+# Machine-specific MCP config
+.mcp.json
+
+# GSD research cache (raw intermediate blobs)
+.planning/research/.cache/
