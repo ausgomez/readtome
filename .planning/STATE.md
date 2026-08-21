@@ -1,11 +1,14 @@
 ---
-gsd_state_version: '1.0'
+gsd_state_version: 1.0
+current_phase: 1
+current_phase_name: Foundation + Input Pipeline
 status: planning
+stopped_at: Roadmap created, ready for Phase 1 planning
+last_updated: "2026-08-21T16:10:23.297Z"
+last_activity: 2026-08-21
+last_activity_desc: "Completed quick task 260821-fcm: errexit-safe status handling in scripts/build-windows.sh"
+state_head: 26085ba1b800e7aaad2ab5cf7c7fc44754c00d8d
 progress:
-  total_phases: 5
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
   percent: 0
 ---
 
@@ -23,13 +26,14 @@ See: .planning/PROJECT.md (updated 2026-08-15)
 Phase: 1 of 5 (Foundation + Input Pipeline)
 Plan: 0 of 0 in current phase (not yet planned)
 Status: Ready to plan
-Last activity: 2026-08-21 — Completed quick task 260821-fcm: errexit-safe status handling in scripts/build-windows.sh
+Last activity: 2026-08-21 — Documented the WIN_USER override in README.md
 
 Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 0
 - Average duration: -
 - Total execution time: 0 hours
@@ -41,6 +45,7 @@ Progress: [░░░░░░░░░░] 0%
 | - | - | - | - |
 
 **Recent Trend:**
+
 - Last 5 plans: -
 - Trend: -
 
@@ -72,6 +77,7 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260821-fcm | errexit-safe status handling in scripts/build-windows.sh — dead `BUILD_EXIT` capture and silent `WIN_USER` detection abort | 2026-08-21 | c49c0a8 | [260821-fcm-fix-dead-build-exit-variable-in-scripts-](./quick/260821-fcm-fix-dead-build-exit-variable-in-scripts-/) |
+| 2 | Document the WIN_USER override for the WSL build script in README.md | 2026-08-21 | e99f4c4 | — |
 
 ## Deferred Items
 
