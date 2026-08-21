@@ -94,3 +94,43 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 3. Settings UI + Key Management | 0/0 | Not started | - |
 | 4. Second Provider + Robustness | 0/0 | Not started | - |
 | 5. Advanced Audio + Polish | 0/0 | Not started | - |
+
+## Backlog
+
+### Phase 999.1: macOS support (BACKLOG)
+
+**Goal:** [Captured for future planning] Ship ReadToMe on macOS, reaching the same
+one-keypress-reads-selection behaviour the Windows build has today.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd-review-backlog when ready)
+
+**Context at capture (2026-08-21):**
+
+PROJECT.md already commits to this ("Platform: Windows first, macOS second") and
+lists an unchecked "macOS support" scope item, but no phase or requirement covered
+it until now. Phases 1-5 are written platform-neutrally, yet everything built so
+far is Windows-specific in implementation.
+
+Known unknowns to work through when this is promoted:
+
+- **Text capture.** The clipboard sandwich must send Cmd+C rather than Ctrl+C, and
+  macOS gates synthetic keyboard events behind Accessibility permissions. STATE.md
+  already flags both `enigo` cross-platform reliability (LOW confidence) and that
+  macOS Accessibility permissions fail silently — this is the highest-risk piece,
+  same as it was for Windows.
+- **Local TTS.** The working local path uses Windows WinRT voices; macOS needs its
+  own backend (AVSpeechSynthesizer via the `tts` crate). Cloud providers, once
+  implemented, would be platform-neutral.
+- **Tray.** macOS menubar semantics differ from the Windows tray — icon template
+  rendering, click-vs-right-click, and the LSUIElement flag to keep the app out of
+  the Dock.
+- **Build and distribution.** `scripts/build-windows.sh` / `.ps1` are WSL->Windows
+  only; macOS needs its own path producing .app/.dmg, plus code signing and
+  notarization for distribution outside a dev machine. CI already has a Linux job
+  but no macOS runner.
+
+Open question for promotion: whether macOS lands as its own milestone or as phases
+interleaved into the existing 1-5 sequence.
