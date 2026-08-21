@@ -65,6 +65,14 @@ npx tauri build
 
 The WSL build script copies the project to `C:\Users\<you>\readtome-build\` and runs the PowerShell build script there. This is necessary because Tauri's bundler tools can't run from WSL UNC paths.
 
+Your Windows username is detected by calling `powershell.exe` from WSL. If that detection fails or picks the wrong account, set `WIN_USER` explicitly:
+
+```bash
+WIN_USER=yourname ./scripts/build-windows.sh
+```
+
+The script exits with an error rather than guessing, so a wrong or missing username can't send the sync to an unintended directory.
+
 ## Configuration
 
 Settings are persisted in a JSON store and survive restarts. Defaults:
